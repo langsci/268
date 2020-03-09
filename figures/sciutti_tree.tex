@@ -1,0 +1,148 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Tree for sciutti: 
+
+% BAsed on:
+
+% A simple Tree
+% Author: Stefan Kottwitz
+% https://www.packtpub.com/hardware-and-creative/latex-cookbook
+\documentclass[border=3cm, varwidth]{standalone} 
+%%%<
+\usepackage{verbatim}
+%%%>
+
+\usepackage{tikz}
+\usetikzlibrary{fit}
+\usetikzlibrary{positioning}
+\begin{document}
+\tikzset{
+ treenode/.style = {shape=rectangle, rounded corners,
+                    draw, align=center, anchor = west, fill= white,
+                     minimum height=1cm},
+  normal/.style     = {treenode, minimum width=2cm},
+  lastlevel/.style  = {treenode, minimum width=3cm},
+}
+
+\begin{tikzpicture}
+    [   
+        grow=right,
+        %sibling distance=4cm,
+        level distance = 3cm,
+        level 1/.style={sibling distance=4cm}, % level 1 : Construct --> Component, Component
+        level 2/.style={sibling distance=2cm}, %level 2: Context
+        %every node/.style = {
+           % shape=rectangle, 
+           % rounded corners,
+           % draw, 
+           % align=center, 
+           % anchor = west,
+           % top color=white, 
+           % bottom color=blue!20,
+            %minimum height=1cm,
+       % normal/.style     = {node, minimum width=2cm},
+        %lastlevel/.style      = { node, minimum width=3cm},
+            %]
+           % }
+           ]]
+    %tree diagram       
+     \node (Asp) [normal] {aspect}
+    child { node (Gram) [normal] {grammatical}
+        child { node (Non-Gram) [lastlevel] {non-prototypical} }
+        child { node (Prot-Gram) [lastlevel] {prototypical} }
+            }
+    child { node (Lex) [normal]{lexical}
+      child { node (Non-Lex) [lastlevel]{non-prototypical} }
+      child { node (Prot-Lex) [lastlevel]{prototypical} } };
+    
+    %Background Rectangles 1 (different sizes)
+    %\node[fit = (P2) (N2) (P1) (N1), rectangle, draw, rounded corners, inner sep = 0.5cm] (R3) {};  
+   %\node[fit = (P2) (N2) (P1) (N1), rectangle, draw, rounded corners, left of = R3, node distance = 2cm, inner sep = 0.5] (R2) {};
+   % \node[fit = (P2) (N2) (P1) (N1), rectangle, draw, rounded corners, left of = R2, node distance = 4cm, inner sep = 0.5] (R1) {};
+   
+   % Background Rectangles 2 (rectangles have 1 size), equidistant from node center
+    \node[fit = (Prot-Lex) (Non-Lex) (Prot-Gram) (Non-Gram), rectangle, draw, rounded corners, inner sep = 0.3cm] (Rect2) {};  
+    \node[fit = (Prot-Lex) (Non-Lex) (Prot-Gram) (Non-Gram), rectangle, draw, rounded corners, inner sep = 0.3cm, left = 0.8cm of Rect2] (Rect1) {}; 
+    %(0.3 original inner sep + 1/
+   \node[fit = (Prot-Lex) (Non-Lex) (Prot-Gram) (Non-Gram), rectangle, draw, rounded corners, inner sep = 0.3cm, left = 0.8cm of Rect1] (Rect0) {};
+    %\node[fit = (P2) (N2) (P1) (N1), rectangle, draw, rounded corners, left of = R2, node distance = 4.5cm, inner sep = 1] (R0) {};
+    
+    %"Titles" of columns/Rectangles [V2]
+    \node (Ctx) at (Prot-Lex) [above = 1.1cm]{Context} ;
+    \node (Comp) at (Ctx -| Lex) {Components};
+    \node (Constr) at (Ctx -| Asp) {Construct};
+    \end{tikzpicture}
+    
+    \vspace{2cm}
+    
+    \begin{tikzpicture}
+    [   
+        grow=right,
+        %sibling distance=4cm,
+        %level distance = 3cm,
+        %level 0/.style={level distance = 2cm},
+        level 1/.style={sibling distance=4cm, level distance=2.85cm}, % level 1 : Construct --> Component, Component
+        level 2/.style={sibling distance=2cm, level distance=3cm}, %level 2: Context
+        %every node/.style = {
+           % shape=rectangle, 
+           % rounded corners,
+           % draw, 
+           % align=center, 
+           % anchor = west,
+           % top color=white, 
+           % bottom color=blue!20,
+            %minimum height=1cm,
+       % normal/.style     = {node, minimum width=2cm},
+        %lastlevel/.style      = { node, minimum width=3cm},
+            %]
+           % }
+           ]]
+    %tree diagram       
+     \node (Asp) [normal] {aspect}
+    child { node (Gram) [normal] {grammatical}
+        child { node (Non-Gram) [lastlevel] {non-prototypical} }
+        child { node (Prot-Gram) [lastlevel] {prototypical} }
+            }
+    child { node (Lex) [normal]{lexical}
+      child { node (Non-Lex) [lastlevel]{non-prototypical} }
+      child { node (Prot-Lex) [lastlevel]{prototypical} } };
+    
+    %Background Rectangles 1 (different sizes)
+    %\node[fit = (P2) (N2) (P1) (N1), rectangle, draw, rounded corners, inner sep = 0.5cm] (R3) {};  
+   %\node[fit = (P2) (N2) (P1) (N1), rectangle, draw, rounded corners, left of = R3, node distance = 2cm, inner sep = 0.5] (R2) {};
+   % \node[fit = (P2) (N2) (P1) (N1), rectangle, draw, rounded corners, left of = R2, node distance = 4cm, inner sep = 0.5] (R1) {};
+   
+   % Background Rectangles 2 (rectangles have 1 size), equidistant from node center
+    \node[fit = (Prot-Lex) (Non-Lex) (Prot-Gram) (Non-Gram), rectangle, draw, rounded corners, inner sep = 0.3cm, label = Context] (Rect2) {};  
+    \node[fit = (Lex) (Gram),rectangle, draw, rounded corners, inner sep = 0.3cm, left = 1.3 cm of Rect2, label = Components] (Rect1) {}; 
+    %(0.3 original inner sep + 1/
+  \node[fit = (Lex) (Gram), rectangle, draw, rounded corners, inner sep = 0.3cm, left = 1.1cm of Rect1, label = Construct] (Rect0) {};
+    %\node[fit = (P2) (N2) (P1) (N1), rectangle, draw, rounded corners, left of = R2, node distance = 4.5cm, inner sep = 1] (R0) {};
+    
+    %"Titles" of columns/Rectangles [V2]
+   % \node (Ctx) at (Prot-Lex) [above = 1.1cm]{Context} ;
+   % \node (Comp) at (Ctx -| Lex) {Components};
+    %\node (Constr) at (Ctx -| Asp) {Construct};
+    \end{tikzpicture}
+    
+    %Alternative positioning for titles [V1] different box sizes/heights
+    %\node (C3) at (N1) [above = 1.1cm]{Context} ;
+    %\node (C2) at (L) [above = 1.6cm]{Components};
+    %\node (C1) at (C2 -| A) {Construct};
+    
+    
+    %\node at (G) [left of = C3] {Components};
+    
+    %\node[above of = R]{Construct};
+    %\node[left of = R, rectangle, draw, rounded corners, inner sep = 0.5cm, node distance=2cm] (R2) {};
+    %\draw[rounded corners] (-0.5,-4) rectangle (2.5,6); 
+    %\node[rectangle anchor= north] {Construct};
+    
+    %\node[block] at (L|C3) {Components} ;
+   % \draw[rounded corners]  (7.5,-4) rectangle (11.5,6);
+ %[block] at ([xshift=10mm] node-5.east|-node-6) (node-7) {20};
+ 
+\end{document}
+
+%!!!!! issue: make level distance such that the distance between the boxes is equal
+%(now, manually)
