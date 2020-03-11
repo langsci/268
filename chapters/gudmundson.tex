@@ -37,8 +37,8 @@ The internal structure of the lexical item itself is often described as composed
 Many models of bilingual mental representations are inspired by the early work of \citet{Weinreich1953}, who proposed three different approaches to bilingual representations. The Compound approach predicts different lexical stores but a shared conceptual store, while the Coordinate approach predicts separate conceptual and lexical stores. Finally, the Subordinate approach predicts a store for L1 conceptual representations only, while L2 lexical items are connected to these representations indirectly via the L1 translation equivalent. Evidence was found for the Compound approach \citep{PotterEtAl1984}, but \citet{KrollCurley1988} found a difference between learners at different proficiency levels; less proficient learners performed according to the Subordinate approach (also known as the word association hypothesis), and the more advanced learners according to the Compound approach (also known as the Concept mediation hypothesis). \citeauthor{KrollCurley1988} therefore suggested a switch from lexical to conceptual mediation as learners became more proficient. That idea was later developed into the Revised Hierarchical Model (RHM) (\citealt{KrollStewart1994, KrollEtAl2010}), see \figref{fig:gudmundson:1} below, which combines the subordinate- and the compound approaches into a single one.
 
 \begin{figure}
-    \includegraphics[width=\textwidth]{figures/Gudmundson-fig1.pdf}
-    \caption{Illustration of the RHM. Reprinted from \citet{KrollStewart1994}, with permission from Elsevier.}
+    \includegraphics[height=.3\textheight]{figures/Gudmundson-fig1mod.pdf}
+    \caption{Illustration of the RHM. Adapted from \citet{KrollStewart1994}.}
     \label{fig:gudmundson:1}
 \end{figure}
 
@@ -171,7 +171,7 @@ Sub\sectref{sec:gudmundson:3.1} treats research question 1, i.e. whether the ass
     \begin{tabular}{l r@{~}r@{~}r r@{~}r@{~}r r@{~}r@{~}r r@{~}r}
     \lsptoprule
         ~  &   \multicolumn{3}{c}{ Swedish} & \multicolumn{3}{c}{ English} & \multicolumn{3}{c}{ Italian} & \multicolumn{2}{c}{ Tot.}\\
-        Ass.    . & Ass.       & Obs.              & Stand.      & Ass.       & Obs.              & Stand.      & Ass.       & Obs.              & Stand.      & Ass.       & Obs.             \\
+        Ass.       & Ass.       & Obs.              & Stand.      & Ass.       & Obs.              & Stand.      & Ass.       & Obs.              & Stand.      & Ass.       & Obs.             \\
              cat. &      dist. &      (\textit{N}) &        res. &      dist. &      (\textit{N}) &        res. &      dist. &      (\textit{N}) &        res. &      dist. &      (\textit{N})\\
     \midrule
         C  &  7.91 &  123 &    8.77 &  2.36 &   33 & {}-4.40 &  2.06 &   26 & {}-4.71 &  4.11 & 182\\
@@ -207,14 +207,62 @@ Sub\sectref{sec:gudmundson:3.1} treats research question 1, i.e. whether the ass
 It can be noted that the greatest proportion of responses was of equivalent meaning or non-equivalent meaning type. These association categories stand out from the other categories in terms of number of associations. The third most common category was collocational, followed by the dual association category meaning and collocation. Form-based and form and meaning-based associations were not that common. Form-based associations occurred almost only in the Italian data.
 
 \begin{figure}
-    \includegraphics[width=\textwidth]{figures/Gudmundson-fig2.pdf}
+\pgfplotstableread{
+  %absolute
+% 1 123      33      26
+% 2 849     652     476
+% 3   1       2      40
+% 4  11      20       2
+% 5  37      77      14
+% 6 534     613     703
+% relative
+1 7.9      2.4      2.1
+2 54.6     46.7     37.7
+3   0       0.1      3.2
+4  0.7      1.4       0.2
+5  2.38      5.5      1.1
+6 34.3     43.9     55.7
+}\dataset
+\begin{tikzpicture}
+\begin{axis}[ybar,
+        width=.95\textwidth,
+        height=.3\textheight,
+        ymin=0,
+%         ymax=100,
+        ylabel={Mean association distribution \%},
+        xlabel={Association category},
+        xlabel style = {yshift=-8mm},
+        xtick=data,
+        bar width=5mm,
+        nodes near coords,
+        xticklabels = {
+            Collocation,
+            Equivalent Meaning,
+            Form,
+            Form and Meaning,
+            Meaning and Collocation,
+            Non-Equivalent Meaning
+        },
+      axis y line*=left,
+      axis x line*=bottom,
+      legend style={at={(.8,1.05)}},
+        x tick label style={align=center,text width=2cm},
+        ticklabel style = {font=\footnotesize},
+        ]
+\addplot[draw=black,fill=lsLightBlue] table[x index=0,y index=1] \dataset; %ano de 2013-2014
+\addplot[draw=black,fill=lsMidDarkBlue] table[x index=0,y index=2] \dataset; %ano de 2012-2013
+\addplot[draw=black,fill=lsNightBlue] table[x index=0,y index=3] \dataset; %ano de 2011-2012
+\legend{L1 Swedish,L2 English,L3 Italian}
+\end{axis}
+\end{tikzpicture}
+%     \includegraphics[width=\textwidth]{figures/Gudmundson-fig2.pdf}
     \caption{Association distribution in L1 Swedish, L2 English and L3 Italian and in the six association categories.}
     \label{fig:gudmundson:2}
 \end{figure}
 
 A first chi-square test of homogeneity showed that the association distribution was not homogeneously distributed over the different association categories, \textit{X\textsuperscript{2}} (5, \textit{N} = 4213) = 6302.3, \textit{p} <.000. The second chi-square test of independence showed that the association distribution was not equally distributed over the different languages \textit{X\textsuperscript{2}} (10, \textit{N} = 4213) = 329.9, \textit{p} <.000. As can be seen in \tabref{tab:gudmundson:3}, the association distribution in the Swedish data was significantly different from the one in the English data and from the Italian data, and the association distribution in the English data was significantly different from the one observed in the Italian data.
 
-\begin{table}
+\begin{table}[p]
     \begin{tabular}{rcrrrl}
     \lsptoprule
          \textit{X}{}-squared & Df & \textit{n} & \textit{p}{}-value & Adj. Alpha & Languages\\
@@ -230,20 +278,65 @@ A first chi-square test of homogeneity showed that the association distribution 
 
 To follow up the chi-square test of independence, standardized residuals were analyzed. According to \citet[81]{Agresti2013}, “[a] standardized residual that exceeds about 2 or 3 in absolute value indicates lack of fit of \textit{H}\textsubscript{0} in that cell”. The standardized residuals in the six categories and the three languages are visualized in \figref{fig:gudmundson:3}.
 
-\begin{figure}
-    \includegraphics[width=\textwidth]{figures/Gudmundson-fig3.pdf}
+\begin{figure}[p]
+\pgfplotstableread{
+  %absolute
+%   swe             eng         ita
+1  8.76653472     -4.40236275  -4.71182177
+2  7.63199404     -0.23336220  -7.80211753
+3 -4.72373720     -3.99123434   9.08055903
+4 -0.42740446      3.36227379  -3.00609634
+5 -1.90556340      6.58865575  -4.76528859
+6 -9.57433020     -0.02944098   10.11896941
+}\dataset
+\begin{tikzpicture}
+\begin{axis}[%
+        width=.95\textwidth,
+%         height=.3\textheight,
+%         ymin=0,
+%         ymax=5000,
+        ylabel={Standardized residuals},
+        xlabel={Association category},
+        xlabel style = {yshift=-8mm},
+        xtick=data,
+%         bar width=5mm,
+        xticklabels = {
+            Collocation,
+            Equivalent Meaning,
+            Form,
+            Form and Meaning,
+            Meaning and Collocation,
+            Non-Equivalent Meaning
+        },
+%         every node near coord/.append style={
+%         anchor=west,
+%         rotate=90
+%             },
+        axis y line*=left,
+        axis x line*=bottom,
+        legend style={at={(0.7,0.2)}},
+        x tick label style={align=center,text width=2cm},
+        ticklabel style = {font=\footnotesize},
+        ]
+\addplot[thick,draw=lsDarkWine , dashed,         nodes near coords]  table[x index=0,y index=1] \dataset; %ano de 2013-2014
+\addplot[thick,draw=lsLightBlue, dotted, nodes near coords] table[x index=0,y index=2] \dataset; %ano de 2012-2013
+\addplot[thick,draw=lsMidGreen , dash dot, nodes near coords]  table[x index=0,y index=3] \dataset; %ano de 2011-2012
+\legend{L1 Swedish,L2 English,L3 Italian}
+\end{axis}
+\end{tikzpicture}
+%     \includegraphics[width=\textwidth]{figures/Gudmundson-fig3.pdf}
+%     \parbox{.5\textwidth}{
+%     \footnotesize
+%     C = Collocational relation\\
+%     EM = Equivalent meaning relation\\
+%     F = Form-based relation
+%     }\parbox{.5\textwidth}{
+%     \footnotesize
+%     FM = Form and meaning relation\\
+%     MC = Meaning and collocational relation\\
+%     NM = Non-equivalent meaning relation\\
+%     }
     \caption{Standardized residuals in the six association categories and the three languages: L1 Swedish, L2 English and L3 Italian.}
-    \parbox{.5\textwidth}{
-    \footnotesize
-    C = Collocational relation\\
-    EM = Equivalent meaning relation\\
-    F = Form-based relation
-    }\parbox{.5\textwidth}{
-    \footnotesize
-    FM = Form and meaning relation\\
-    MC = Meaning and collocational relation\\
-    NM = Non-equivalent meaning relation\\
-    }
     \label{fig:gudmundson:3}
 \end{figure}
 
@@ -261,13 +354,13 @@ This section addresses research question 2, i.e. whether there is a difference i
         Ass.      & Obs.              & \textit{M}    &             & Obs.               & \textit{M}    &             & Obs.              & \textit{M}    & \textit{SD} & Obs.              & \textit{M}    &            \\
              cat. &      (\textit{N}) &            RT & \textit{SD} &       \textit{N})  &            RT & \textit{SD} &      (\textit{N}) &            RT & \textit{SD} &      (\textit{N}) &            RT & \textit{SD}\\
     \midrule
-        C & 123 & 1966 & 808 & {33} & 1994 & 794 & 26 & 2761 & 1317 & 182 & 2084 & 932\\
-        EM & 849 & 2169 & 1010 & {652} & 2310 & 1012 & 476 & 2757 & 1246 & 1977 & 2357 & 1097\\
-        F & 1 & 1537 &  & {2} & 1746 & 185 & 40 & 3315 & 1392 & 43 & 3201 & 1407\\
-        FM & 11 & 2641 & 969 & {20} & 2037 & 841 & 2 & 2967 & 1909 & 33 & 2295 & 969\\
-        MC & 37 & 1914 & 799 & {77} & 1613 & 701 & 14 & 1627 & 510 & 128 & 1701 & 721\\
-        NM & 534 & 2261 & 1114 & {613} & 2550 & 1133 & 703 & 3184 & 1312 & 1850 & 2707 & 1260\\
-        Tot. & 1555 & 2181 & 1032 & {1397} & 2365 & 1070 & 1261 & 3000 & 1308 & 4213 & 2487 & 1184\\
+        C    & 123 & 1966 & 808  &            {33}  & 1994 & 794  &        26  & 2761 & 1317 &           182 & 2084 & 932 \\
+        EM   & 849 & 2169 & 1010 &            {652} & 2310 & 1012 &        476 & 2757 & 1246 &           1977& 2357 & 1097\\
+        F    & 1   & 1537 &      &            {2}   & 1746 & 185  &         40 & 3315 & 1392 &           43  & 3201 & 1407\\
+        FM   & 11  & 2641 & 969  &            {20}  & 2037 & 841  &        2   & 2967 & 1909 &           33  & 2295 & 969 \\
+        MC   & 37  & 1914 & 799  &            {77}  & 1613 & 701  &        14  & 1627 & 510  &           128 & 1701 & 721 \\
+        NM   & 534 & 2261 & 1114 &            {613} & 2550 & 1133 &        703 & 3184 & 1312 &           1850& 2707 & 1260\\
+        Tot. & 1555& 2181 & 1032 &            {1397}& 2365 & 1070 &        1261& 3000 & 1308 &           4213& 2487 & 1184\\
     \lspbottomrule
     \end{tabular}
     }
@@ -292,7 +385,60 @@ This section addresses research question 2, i.e. whether there is a difference i
 When looking at the total values for the different languages, reaction times were fastest in Swedish, followed by English, followed by Italian. As regards the different categories, reaction times were fastest for meaning and collocational associations, i.e. a dual link between the cue word and the association implied fast responses. As far as that category is concerned, there were very small differences in response times across languages. The second fastest response times were obtained in collocational associations followed by equivalent meaning associations, i.e. associations with a significant semantic overlap. Form-based associations produced the slowest responses, even though response times for Swedish and English were rather fast. It is important though, to recognize that the English and Swedish data are built on three observations only, and that the data, in general, are rather unbalanced.
 
 \begin{figure}
-    \includegraphics[width=\textwidth]{figures/Gudmundson-fig4.pdf}
+\pgfplotstableread{
+  %absolute
+1  1966   1994  2084
+2  2169   2310  2357
+3  1537   1746  3201
+4  2641   2037  2295
+5  1914   1613  1701
+6  2261   2550  2707
+
+% relative
+% 1
+% 2
+% 3
+% 4
+% 5
+% 6
+}\dataset
+\begin{tikzpicture}
+\begin{axis}[ybar,
+        width=.95\textwidth,
+        height=.3\textheight,
+        ymin=0,
+%         ymax=5000,
+        ylabel={Mean association time},
+        xlabel={Association category},
+        xlabel style = {yshift=-8mm},
+        xtick=data,
+        bar width=5mm,
+        xticklabels = {
+            Collocation,
+            Equivalent Meaning,
+            Form,
+            Form and Meaning,
+            Meaning and Collocation,
+            Non-Equivalent Meaning
+        },
+        every node near coord/.append style={
+        anchor=west,
+        rotate=90
+            },
+        axis y line*=left,
+        axis x line*=bottom,
+        legend style={at={(0.25,1.4)}},
+        x tick label style={align=center,text width=2cm},
+        ticklabel style = {font=\footnotesize},
+        ]
+\addplot[draw=black,fill=lsLightBlue, nodes near coords] table[x index=0,y index=1] \dataset; %ano de 2013-2014
+\addplot[draw=black,fill=lsMidDarkBlue, nodes near coords] table[x index=0,y index=2] \dataset; %ano de 2012-2013
+\addplot[draw=black,fill=lsNightBlue, nodes near coords] table[x index=0,y index=3] \dataset; %ano de 2011-2012
+\legend{L1 Swedish,L2 English,L3 Italian}
+\end{axis}
+\end{tikzpicture}
+
+%     \includegraphics[width=\textwidth]{figures/Gudmundson-fig4.pdf}
     \caption{Word association task, mean reaction times over the different association categories and languages.}
     \label{fig:gudmundson:4}
 \end{figure}
@@ -381,7 +527,7 @@ Collocations were mainly produced in L1 Swedish, and rarely in L2 English or in 
 Results from the present study actually suggest a slightly different progression, where semantic classification precedes the focus on sequential probabilities, i.e. learners seem to be able to create strong semantic networks without being able to handle collocations and collocational probabilities, even if they are produced fast when they do occur. \citet{DallerEtAl2007}, propose a three-dimensional model to illustrate word knowledge. The three dimensions – breadth, fluency and depth – constitute a so-called lexical space in which the lexical knowledge of a learner can be located. They argue that some learners might, for example, show a high degree of fluency, but poor lexical breadth, or large vocabularies, but poor fluency. In what follows, a model of the developing mental lexicon composed of four different dimensions – vocabulary breadth and depth, fluency, proficiency and association category – is proposed, but it must be understood as hypothetical (\figref{fig:gudmundson:5}).
 
 \begin{figure}
-    \includegraphics[width=\textwidth]{figures/Gudmundson-fig5.pdf}
+    \includegraphics[width=\textwidth]{figures/Gudmundson-fig5mod.pdf}
     \caption{Model of the developing mental lexicon.}
     \label{fig:gudmundson:5}
 \end{figure}
@@ -393,7 +539,13 @@ The model proposed in \figref{fig:gudmundson:5} suggests that the connections in
 The LDT reported in this study proved that during L3 production that required semantic activation (the word association task in L3), the corresponding L2 translation equivalent was unconsciously activated. Most likely, the L1 translation equivalent was also activated, but this effect is not controlled for in this study. This research is in line with results in the bilingual domain and can now be extended to a multilingual context and to a new language combination. Both \citet{FitzpatrickIzura2011} and \citet{LiEtAl2009} found an effect of long-term cross-language semantic priming between L2 and L1 that indicated that during L2 conceptual processing, the corresponding L1 translation equivalent had also been activated. Both interpreted the results in favor of the RHM, i.e. that L1 has a special status in acting as conceptual mediator in low proficient L2 users. The mediating effect of the L1 during the word association task postulated by \citet{FitzpatrickIzura2011} was depicted in the way presented in \figref{fig:gudmundson:6}.
 
 \begin{figure}
-    \includegraphics[width=\textwidth]{figures/Gudmundson-fig6.pdf}
+\parbox{.8\textwidth}{
+\centering
+~\hfill Intermediate L1 link \hfill~\\
+Cue word (L2) \hfill Response (L2)\\
+ \hfill \textbf{LORRY} \hfill \tikzfancyarrow{}  \hfill\textit{camión} `lorry' \hfill \tikzfancyarrow{}  \hfill \textbf{CAR} \hfill~\\
+ }
+%     \includegraphics[width=\textwidth]{figures/Gudmundson-fig6.pdf}
     \caption{Mediation effect of the L1 Spanish during the L2 English word association task. Reprinted from \citet{FitzpatrickIzura2011}, with permission from Cambridge Univeristy Press.}
     \label{fig:gudmundson:6}
 \end{figure}
@@ -401,12 +553,37 @@ The LDT reported in this study proved that during L3 production that required se
 In the present study, a priming effect of 26.45 milliseconds was observed between L3 and L2 in the LDT, which was similar to the one obtained by Fitzpatrick \& Izura of 20 milliseconds between L2 and L1. If we assume that conceptual access proceeds in the way postulated by the RHM (i.e., that L1 mediates conceptual access in a later learned language), it needs to be added to the model that also another non-native language could fill the same function. Such a model would look like the one presented below in \figref{fig:gudmundson:7}.
 
 \begin{figure}
-    \includegraphics[width=\textwidth]{figures/Gudmundson-fig7.pdf}
+\parbox{25mm}{\centering
+Cue word (L3)\\\smallskip
+
+\textbf{TAVOLA}\\
+`table'\medskip\\~
+}
+\parbox{15mm}{
+\rotatebox[origin=c]{20}{\tikzfancyarrow[1.5cm]}\\
+\rotatebox[origin=c]{-20}{\tikzfancyarrow[1.5cm]}\\
+}
+\parbox{35mm}{\centering
+Intermediate L1 link\\\smallskip
+\textit{bord} `table'\\\bigskip
+Intermediate L2 link\\\smallskip
+\textit{table}
+}
+\parbox{15mm}{
+\rotatebox[origin=c]{-20}{\tikzfancyarrow[1.5cm]}\\
+\rotatebox[origin=c]{20}{\tikzfancyarrow[1.5cm]}\\
+}
+\parbox{25mm}{\centering
+Response (L3)\\\smallskip
+\textbf{SEDIA}\\
+`chair'\medskip\\~
+}
+%     \includegraphics[width=\textwidth]{figures/Gudmundson-fig7.pdf}
     \caption{Mediation effect of the L2 and the L1 during the L3 word association task.}
     \label{fig:gudmundson:7}
 \end{figure}
 
-\citet{Abunawara1994} favored a model where all non-native languages relate and depend on L1 only, but the present results could be said to imply that L1 is not unique or qualitatively different from an L2 when it comes to mediating semantic access. As stated by \citeauthor{Szubko-Sitarek2011}, “it seems legitimate to say that the native language does not always have a privileged status” (\citeyear[170]{Szubko-Sitarek2011}).
+\citet{Abunawara1992} favored a model where all non-native languages relate and depend on L1 only, but the present results could be said to imply that L1 is not unique or qualitatively different from an L2 when it comes to mediating semantic access. As stated by \citeauthor{Szubko-Sitarek2011}, “it seems legitimate to say that the native language does not always have a privileged status” (\citeyear[170]{Szubko-Sitarek2011}).
 
 Generally, in studies of multilingual lexical processing, the L3 is the weakest language, which makes it difficult to distinguish between language status and proficiency, and this is the case in the present study. We cannot know whether the results are due to the fact that English was learned before Italian or due to the fact that proficiency was higher in English. \citeauthor{GoralEtAl2006} suggest that “a third language (L3) may be learned in connection with a previously learned non-native language (L2), and thus develop strong lexical connections with that language” (\citeyear[244]{GoralEtAl2006}), and that might be independent of proficiency. It can also be added that we do not know anything about the size of the different arrows in \figref{fig:gudmundson:7}. It might be, for example, that the effect is stronger in the L1 compared to the L2, but it must be noted that that the priming effect, expressed in milliseconds, was slightly higher in this study compared to the study by \citet{FitzpatrickIzura2011}.
 
