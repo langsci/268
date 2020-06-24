@@ -1,8 +1,7 @@
-\documentclass[output=book,collection,collectionchapter,nonflat,modfonts
+\documentclass[output=book,collection,collectionchapter,multiauthors
             ,colorlinks, citecolor=brown
-            ,multiauthors %% remove this line if only one editor
-            ,draft,draftmode
-		  ]{langsci/langscibook}
+%             ,draft,draftmode
+		  ]{langscibook}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \input{localmetadata.tex}
@@ -40,18 +39,19 @@
 %%%             Chapters                         %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\includepaper{chapters/introduction} %OK
-\includepaper{chapters/sanchez1} %OK
-\includepaper{chapters/salaberry} %OK
-\includepaper{chapters/gudmundson} %tikz, pgf
-\includepaper{chapters/sciutti}%OK
-\includepaper{chapters/munoz} %OK
-\includepaper{chapters/pfenninger} %redo tables; appendix
-\includepaper{chapters/sanchez7} %OK
-\includepaper{chapters/stadt}  %OK
+\includepaper{chapters/introduction}%
+\includepaper{chapters/sanchez1}%needs epigram
+\includepaper{chapters/salaberry}
+\includepaper{chapters/gudmundson}
+\includepaper{chapters/sciutti}
+\includepaper{chapters/munoz}
+\includepaper{chapters/pfenninger}
+\includepaper{chapters/sanchez7}%
+\includepaper{chapters/stadt}%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%             Backmatter                       %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\sloppy
 \input{backmatter.tex}
 \end{document}

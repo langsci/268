@@ -33,6 +33,9 @@
   \pagenumbering{roman}
   \setcounter{chapter}{#1}
   \addtocounter{chapter}{-1}
+  \WarningsOff[microtype]
+    \WarningFilter{microtype}{Unknown slot}
+    \WarningFilter{scrbook}{package incompatibility}
   }
 
 \usetikzlibrary{shapes.arrows,shadows}
@@ -43,3 +46,5 @@
 single arrow head extend=.1cm}}
 
 \newcommand{\tikzfancyarrow}[1][1cm]{\tikz[baseline=-0.5ex]\node [arrowstyle=#1]{} ;}
+
+\providecommand{\LastRefSteppedCounter}{}
