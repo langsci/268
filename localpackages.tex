@@ -20,7 +20,12 @@
 %\usepackage{langsci-optional}
 \usepackage{langsci-gb4e}
 % \usepackage{langsci-lgr}
-\usepackage{pgfplots,pgfplotstable}
+\makeatletter
+\let\pgfmathModX=\pgfmathMod@
+\usepackage{pgfplots,pgfplotstable}%
+\let\pgfmathMod@=\pgfmathModX
+\makeatother
+\usepgfplotslibrary{colorbrewer}
 \usetikzlibrary{fit}
 %\usetikzlibrary{positioning}
 
@@ -34,18 +39,13 @@
 }
 
 \usepackage{hhline}
-
 \usepackage{rotating}
-
 \usepackage{comment}
-
+\usepackage{multicol}
 \usepackage[linguistics,edges]{forest}
 
-% \usepackage{./langsci/styles/jambox}
-
-
-
-
-
-
-
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={.},detect-weight=true, detect-family=true, detect-all, input-symbols={\%}, free-standing-units, input-open-uncertainty= , input-close-uncertainty= ,table-align-text-pre=false,uncertainty-separator={\,},group-digits=false,detect-inline-weight=math}
+\DeclareSIUnit[number-unit-product={}]{\percent}{\%}
+\makeatletter \def\new@fontshape{} \makeatother
+\robustify\bfseries % For detect weight to work

@@ -15,6 +15,8 @@
 
 \newcommand{\langscidata}[1]{\pgfplotstableread{#1}\mydata;}
 
+\renewcommand{\lsChapterFooterSize}{\footnotesize}
+
 \makeatletter
 \let\thetitle\@title
 \let\theauthor\@author
@@ -48,3 +50,29 @@ single arrow head extend=.1cm}}
 \newcommand{\tikzfancyarrow}[1][1cm]{\tikz[baseline=-0.5ex]\node [arrowstyle=#1]{} ;}
 
 \providecommand{\LastRefSteppedCounter}{}
+
+\DeclareNewSectionCommand
+  [
+    counterwithin = chapter,
+    afterskip = 2.3ex plus .2ex,
+    beforeskip = -3.5ex plus -1ex minus -.2ex,
+    indent = 0pt,
+    font = \usekomafont{section},
+    level = 1,
+    tocindent = 1.5em,
+    toclevel = 1,
+    tocnumwidth = 2.3em,
+    tocstyle = section,
+    style = section
+  ]
+  {appendixsection}
+
+\renewcommand*\theappendixsection{\Alph{appendixsection}}
+\renewcommand*{\appendixsectionformat}{\appendixname~\theappendixsection\autodot\enskip}
+\renewcommand*{\appendixsectionmarkformat}{\appendixname~\theappendixsection\autodot\enskip}
+
+\pgfplotscreateplotcyclelist{langsci}{
+   RdYlBu-A,every mark/.append style={fill=RdYlBu-A!80!black},mark=*\\
+   RdYlBu-F!60!black,every mark/.append style={fill=RdYlBu-F!80!black},mark=otimes*\\
+   RdYlBu-L,every mark/.append style={fill=RdYlBu-L!80!black},mark=diamond*\\
+}
