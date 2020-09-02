@@ -143,29 +143,23 @@ The graphical representation of the converging findings from both studies is sho
     \begin{tikzpicture}
     \begin{axis}[
     scale only axis,
-    enlargelimits=0.15,
+    enlarge x limits=0.05,
     ylabel = Scores,
-    %ylabel style = {font =\footnotesize},
     xtick = {1,2,3,4},
     xticklabels = {Intermediate, Advanced, Near-native, Native},
-    xticklabel style={inner sep=5pt, anchor = north, font =\footnotesize},
     axis lines*=left,
-    %x tick label style={rotate=45, anchor=east, align=right,text width=3.5cm}
     nodes near coords,
-    node near coords style = {inner sep = 0.15cm},
-    nodes near coords align = {anchor = south east},
-    legend style={at={(0.08,0.97)}, anchor = north west, font =\footnotesize},
+    legend pos = {north west},
+    cycle list name=black white,
     ]
-    %\addplot[lsNightBlue] table %{data1salaberry.dat};
-     \addplot[lsNightBlue] table {
+     \addplot+[nodes near coords align={below}] table {
         x   y
         1   63
         2   80
      	3   97
        	4   100
        };
-    %\addplot[lsLightWine]  table {data2salaberry.dat};
-       \addplot[lsLightWine]  table {
+       \addplot+[]  table {
        		x   y
       		1   66
       		2   58
