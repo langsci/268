@@ -324,6 +324,7 @@
     toc=bibliography,
     index=totoc,
     headings=optiontohead,
+    footlines=1,
     % %   headings=normal,
     \lsChapterPrefixString
     %draft=yes,
