@@ -1,7 +1,7 @@
 \documentclass[output=book,collection,collectionchapter,multiauthors
-            ,colorlinks, citecolor=brown
+%             ,colorlinks, citecolor=brown
 %             ,draft
-            ,draftmode
+%             ,draftmode
 		  ]{langscibook}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -11,7 +11,6 @@
 \input{localcommands.tex}
 \bibliography{localbibliography}
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%             Frontmatter                      %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -20,6 +19,7 @@
 \maketitle
 \currentpdfbookmark{Contents}{name} % adds a PDF bookmark
 {\sloppy\tableofcontents}
+\addtocontents{toc}{\protect\largerpage[3]}
 
 \mainmatter
 \typeout{mainmatter starts at \therealpage}
