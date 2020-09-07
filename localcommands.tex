@@ -71,6 +71,22 @@ single arrow head extend=.1cm}}
 \renewcommand*{\appendixsectionformat}{\appendixname~\theappendixsection\autodot\enskip}
 \renewcommand*{\appendixsectionmarkformat}{\appendixname~\theappendixsection\autodot\enskip}
 
+\DeclareNewSectionCommand
+  [
+    counterwithin = appendixsection,
+    afterskip = 1.5ex plus .2ex,
+    beforeskip = -3.25ex plus -1ex minus -.2ex,
+    indent = 0pt,
+    font = \usekomafont{subsection},
+    level = 2,
+    tocindent = 3.8em,
+    toclevel = 2,
+    tocnumwidth = 3.2em,
+    tocstyle = section,
+    style = section
+  ]
+  {appendixsubsection}
+
 \pgfplotscreateplotcyclelist{langsci}{
    RdYlBu-A,every mark/.append style={fill=RdYlBu-A!80!black},mark=*\\
    RdYlBu-F!60!black,every mark/.append style={fill=RdYlBu-F!80!black},mark=otimes*\\
