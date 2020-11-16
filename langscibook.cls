@@ -136,6 +136,7 @@
 \newbool{collectiontoclong}
 \newbool{uniformtopskip}
 \newbool{oldstylenumbers}
+\newbool{tblseight}%for chinesefonts in tbls series page
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %     Option handling
@@ -275,15 +276,19 @@
 	\AdditionalFontImprint{Estrangelo Edessa}
 }
 
+\DeclareVoidOption{tblseight}{
+    \booltrue{tblseight}
+}
+
 \ProcessKeyvalOptions{langscibook}
 
 % \newcommand{\lsOutputLong}{long}
-\newcommand{\lsOutputBook}{book}             % standard book
-\newcommand{\lsOutputPaper}{paper}            % paper in edited volume
-\newcommand{\lsOutputGuidelines}{guidelines}  % guidelines
-\newcommand{\lsOutputCoverBODsc}{coverbodsc}      % cover with BoD measurements
-\newcommand{\lsOutputCoverBODhc}{coverbodhc}      % cover with BoD measurements
-\newcommand{\lsOutputCoverCS}{covercreatespace} % cover with CreateSpace measurements
+% \newcommand{\lsOutputBook}{book}             % standard book
+% \newcommand{\lsOutputPaper}{paper}            % paper in edited volume
+% \newcommand{\lsOutputGuidelines}{guidelines}  % guidelines
+% \newcommand{\lsOutputCoverBODsc}{coverbodsc}      % cover with BoD measurements
+% \newcommand{\lsOutputCoverBODhc}{coverbodhc}      % cover with BoD measurements
+% \newcommand{\lsOutputCoverCS}{covercreatespace} % cover with CreateSpace measurements
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %     Output variables
@@ -295,6 +300,14 @@
 \newbool{coverBODhc}
 \newbool{coverBODsc}
 \newbool{coverCS}
+
+\newcommand{\lsOutputPaper}{paper}
+\newcommand{\lsOutputBook}{book}
+\newcommand{\lsOutputGuidelines}{guidelines}
+\newcommand{\lsOutputCoverBODhc}{coverbodhc}
+\newcommand{\lsOutputCoverBODsc}{coverbodsc}
+\newcommand{\lsOutputCoverCS}{amazoncover}
+
 \ifx\lsOutput\lsOutputPaper{\global\booltrue{paper}}\fi
 \ifx\lsOutput\lsOutputBook{\global\booltrue{book}}\fi
 \ifx\lsOutput\lsOutputGuidelines{\global\booltrue{guidelines}}\fi
@@ -305,6 +318,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %     Class
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\RequirePackage{etex}
+\reserveinserts{18} % to prevent "no room for a new count error"
 
 \newcommand{\lsChapterPrefixString}{} %this conditional cannot be put
 % directly into the LoadClass, so we compute the value and store it in a command
@@ -317,6 +333,7 @@
     }{}
 }
 
+
 \LoadClass[
     fontsize=\lsFontsize, % default is 11pt
     footnotes=multiple,
@@ -324,7 +341,6 @@
     toc=bibliography,
     index=totoc,
     headings=optiontohead,
-    footlines=1,
     % %   headings=normal,
     \lsChapterPrefixString
     %draft=yes,
@@ -338,9 +354,9 @@
 % secret hook to insert package which want to be loaded before all other packages
 \IfFileExists{./langsci-earlyload.def}{\input{langsci-earlyload.def}}{}
 
-\usepackage{morewrites} %more helper files to write to
-\usepackage{etex}
-\reserveinserts{18}
+% \usepackage{morewrites} %more helper files to write to
+% \usepackage{etex}
+% \reserveinserts{28}
 \usepackage{xstring}
 \usepackage{graphicx}
 \usepackage{hyphenat}
@@ -349,16 +365,12 @@
 	\usetikzlibrary{positioning}
 	\usetikzlibrary{calc}
 
-\usepackage{pbox}   % boxes with maximum width
 \usepackage[hyphens]{url}
 \urlstyle{same}
 
 
 %% standard commands
 \usepackage{langsci-basic}
-\usepackage{todonotes}
-\usepackage{tabularx}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %      Covers
@@ -408,15 +420,16 @@
     % Generates the content of the back cover
     % Argument 1: Text width, corresponding to Argument 1 of \frontcovertoptext
     \newcommand{\backcover}[1]{
-    \node [ font=\fontsize{25pt}{10mm}\selectfont,
+    \node [ font=\lsBackTitleFont,
             right,
             below right = 10mm and 7.5mm of CoverColouredRectangleBack.north west,
             text width=#1
-            ] (lspcls_backtitle) {\color{white}\lsBackTitleFont{\raggedright\lsBackTitle\par}};
-    \node [ below = 10mm of lspcls_backtitle,
+            ] (lspcls_backtitle) {\color{white}\raggedright\lsBackTitle\par};
+    \node [ font=\lsBackBodyFont,
+            below = 10mm of lspcls_backtitle,
             text width=#1,
             align=justify
-            ] {\color{white}\lsBackBodyFont{\parindent=15pt\lsBackBody}};
+            ] {\color{white}\parindent=15pt\lsBackBody};
     \node [  below right = 192.5mm and 97.5mm of CoverColouredRectangleBack.north west,
             text width=4cm] {%
         \colorbox{white}{
@@ -435,31 +448,30 @@
     \renewcommand{\lastand}{\\}
     \renewcommand{\newlineCover}{\\}
 
-    \node [ execute at begin node={},
-            font=\fontsize{#3}{17.25mm}\selectfont,
+    \node [ font=\lsCoverTitleFont,
             below right = 10mm and 7.5mm of CoverColouredRectangleFront.north west,
             text width=#2,
             align=left
-            ] (lspcls_covertitle) {\color{#1}\lsCoverTitleFont{\raggedright\@title\par}};
+            ] (lspcls_covertitle) {\color{#1}\raggedright\@title\par};
 
     \ifx\@subtitle\empty  % Is there a subtitle? If no, just print the author.
-    \node [ font=\fontsize{25pt}{12.5mm}\selectfont,
+    \node [ font=\lsCoverAuthorFont,
             right,
             below = 11.2mm of lspcls_covertitle.south,
             text width=#2
-            ] {\color{#1}\lsCoverAuthorFont\nohyphens{\lsEditorPrefix\@author\par}};
+            ] {\color{#1}\nohyphens{\lsEditorPrefix\@author\par}};
     \else % If yes, create a node for subtitle and author
-    \node [ font=\fontsize{25pt}{10mm}\selectfont,
+    \node [ font=\lsCoverSubTitleFont,
             below = 8mm of lspcls_covertitle.south,
             text width=#2,
             align=left
-            ] (lspcls_coversubtitle) {\color{#1}\lsCoverSubTitleFont{\raggedright\@subtitle\par}};
+            ] (lspcls_coversubtitle) {\color{#1}\raggedright\@subtitle\par};
     \node [
-            font=\fontsize{25pt}{12.5mm}\selectfont,
+            font=\lsCoverAuthorFont,
             right,
             below = 11.2mm of lspcls_coversubtitle.south,
             text width=#2
-            ] {\color{#1}\lsCoverAuthorFont{\nohyphens{\lsEditorPrefix\@author\par}}};
+            ] {\color{#1}\nohyphens{\lsEditorPrefix\@author\par}};
     \fi
     }
 
@@ -473,11 +485,11 @@
     \path let \p1 = (lspcls_square.north east), % Calculate the exact coordinates for the Series Title to print.
                 \p2 = (lspcls_covertitle.west)
                 in node at (\x2,\y1) (lspcls_seriesinfo) [
-                    font=\fontsize{17pt}{7.5mm}\selectfont,
+                    font=\lsCoverSeriesFont,
                     right,
                     text width=95mm,
                     anchor=north west]
-                {\color{#1}\lsCoverSeriesFont{\lsSeriesTitle~\lsSeriesNumber\par}};
+                {\color{#1}\lsSeriesTitle~\lsSeriesNumber\par};
     }
 }{}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -585,7 +597,7 @@
         %% this is possible for a complete series only.
         \ifx\lsSeries\sidl
         %\def\exfont{\normalsize\itshape}
-        \renewcommand{\eachwordone}{\itshape} % only \gll
+        \providecommand{\eachwordone}{\itshape} % only \gll
 
         \let\oldtable\table   % footnotes in tables without horizontal line
         \let\endoldtable\endtable
@@ -593,11 +605,11 @@
         \fi
 
         \ifx\lsSeries\pmwe
-        \renewcommand{\eachwordone}{\normalfont}
+        \providecommand{\eachwordone}{\normalfont}
         \fi
 
         \ifx\lsSeries\nc
-        \renewcommand{\eachwordone}{\itshape}
+        \providecommand{\eachwordone}{\itshape}
         \fi
 
     } %% \AtBeginDocument
@@ -754,9 +766,9 @@
     }{}
     % Improve the appearance of numbers in tables and the TOC 
     % In those places, they should come out monospaced, unlike in main text.
-    \let\oldtabular\tabular	% number in tabulars
-    \let\endoldtabular\endtabular
-    \renewenvironment{tabular}{\normalfont\addfontfeatures{Numbers={Monospaced,Lining}}\selectfont\oldtabular}{\endoldtabular}
+    \AtBeginEnvironment{tabular}{\addfontfeatures{Numbers={Monospaced,Lining}}\selectfont}
+    \AtBeginEnvironment{tabularx}{\addfontfeatures{Numbers={Monospaced,Lining}}\selectfont}
+    \AtBeginEnvironment{longtable}{\addfontfeatures{Numbers={Monospaced,Lining}}\selectfont}
     
     \DeclareTOCStyleEntry
       [  
@@ -779,7 +791,7 @@
     % In collected volumes, adjust the spacing for unnumbered chapters
     \ifbool{collection}{
       \renewcommand{\addtocentrydefault}[3]{%
-        \ifstr{#2}{}{%
+        \Ifstr{#2}{}{%
           \addcontentsline{toc}{#1}{\protect\numberline{~}#3}%
         }{%
           \addcontentsline{toc}{#1}{\protect\numberline{#2}#3}%
@@ -983,6 +995,15 @@
 %    Series history
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\newcommand{\tblseight}{{\color{red} Chinese fonts for TBLS 8 not loaded! Please set the option \textsc{tblseight} in main.tex for final production}}
+\ifbool{tblseight}{
+\newfontfamily\cn
+    [
+    Scale=MatchLowercase,
+    BoldFont=SourceHanSerifSC-Bold.otf
+]
+{SourceHanSerifSC-Regular.otf}
+\renewcommand{\tblseight}{{\cn 语法理论: 从转换语法到基于约束的理论}}}{}
 \newcommand{\lsSeriesHistory}{
     \color{black}
     \raggedright\lsCoverSeriesHistoryFont
@@ -1261,7 +1282,7 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \usepackage{datetime}
-\usepackage[autoenlargeheadfoot=off]{scrlayer-scrpage}
+\usepackage[autoenlargeheadfoot=off, draft=false]{scrlayer-scrpage}
 % This option explicitely increases the size of the footer in plain pages.
 % This ensures there is enough space to print the citation in collected vols.
 % This setting does not influence the composition of the typearea.
@@ -1320,13 +1341,13 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
 \def\epigramsource#1{\gdef\@epigramsource{#1}}
 \epigramsource{}
 
-
 %%% epigraph configuration
 \usepackage{epigraph}
-\setlength{\epigraphrule}{0pt}
 \renewcommand{\textflush}{flushepinormal}
 \setlength{\epigraphwidth}{.618\textwidth} % Set to the longer part of golden ratio
+\setlength{\epigraphrule}{0pt}
 \setlength{\afterepigraphskip}{0\baselineskip}
+\setlength{\beforeepigraphskip}{0\baselineskip}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %    Footnotes
@@ -1346,6 +1367,7 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
 \AtBeginDocument{\setlength{\normalparindent}{\parindent}}
 
 \KOMAoptions{footnotes=multiple}
+
 
 %% http://tex.stackexchange.com/questions/28465/multiple-footnotes-at-one-point/71015#71015
 \let\oldFootnote\footnote
@@ -1490,41 +1512,6 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
 \defbibheading{portuguese}{\chapter{Referências}\sloppy}
 \defbibheading{chinese}{\chapter{参考文献}\sloppy}
 
-
-% fix \citep* et.al.
-% unclear why it was overwritten, these are the definitions from blx-natbib.def
-\renewrobustcmd*{\citet}{%
-  \@ifstar
-    {\AtNextCite{\AtEachCitekey{\defcounter{maxnames}{999}}}%
-     \textcite}
-    {\textcite}}
-
-\renewrobustcmd*{\citep}{%
-  \@ifstar
-    {\AtNextCite{\AtEachCitekey{\defcounter{maxnames}{999}}}%
-     \parencite}
-    {\parencite}}
-
-\renewrobustcmd*{\citealt}{%
-  \@ifstar
-    {\AtNextCite{%
-       \def\nameyeardelim{\addspace}%
-       \AtEachCitekey{\defcounter{maxnames}{999}}}%
-     \orgcite}
-    {\AtNextCite{\def\nameyeardelim{\addspace}}%
-     \orgcite}}
-
-\renewrobustcmd*{\citealp}{%
-  \@ifstar
-    {\AtNextCite{\AtEachCitekey{\defcounter{maxnames}{999}}}%
-     \orgcite}
-    {\orgcite}}
-
-\let\citew\citet
-
-\let\orgcite=\cite
-\let\cite=\citet 	% in order to prevent inconsistencies between \cite and \citet
-
 %% penalties against widows and orphans in bibliography
 %% http://tex.stackexchange.com/questions/297705/atbeginenvironment-does-not-work-with-natbib/297721#297721
 \apptocmd{\thebibliography}{%
@@ -1541,10 +1528,11 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
 
 \usepackage{floatrow}	% For adjusting the position of the caption (default is below).
 \floatsetup[table]{capposition=top} 	% As for tables, the caption appears above.
-%% This sets the default for the positioning of floats
+
 \renewcommand{\fps@figure}{htbp}
 \renewcommand{\fps@table}{htbp}
 
+\usepackage[figuresright]{rotating}
 \usepackage{booktabs} % for nicer lines
 
 %% floats
@@ -1593,7 +1581,7 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
 	}
 	%% format of the TOC entry
 	\renewcommand{\addchaptertocentry}[2]{
-		\ifstr{#1}{}{%
+		\Ifstr{#1}{}{%
 		\addtocentrydefault{chapter}{}{#2}%
 		}{%
 		\addtocentrydefault{chapter}{}{\chapapp~#1: #2}%
@@ -1711,7 +1699,7 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
 % \fi
 
 %% this is required by authorindex
-\newif\ifshowindex \showindexfalse
+% \newif\ifshowindex \showindexfalse
 \usepackage{authorindex}
 
 \providecommand{\isi}[1]{\is{#1}#1}
@@ -1790,8 +1778,6 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
 \providecommand{\partref}[1]{Part~\ref{#1}}
 \providecommand{\tabref}[1]{Table~\ref{#1}}
 \providecommand{\figref}[1]{Figure~\ref{#1}}
-
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %    Collection (edited volume):
@@ -1920,38 +1906,39 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
             [afterskip=1.15\baselineskip plus .1\baselineskip minus .167\baselineskip]
             {chapter}
         \renewcommand{\maketitle}{
-            % With \setchapterpreamble from scrbook, we ensure that the author(s),
-            % their affiliation, the abstract, etc., are part of the \chapter block.
+            % With \setchapterpreamble from scrbook, we ensure that the author(s)
+            % and their affiliation(s) are part of the \chapter block.
             \setchapterpreamble[u]{
                 \onlyAuthor
                 \lsCollectionPaperAuthor%
-                \vspace{\baselineskip}
-                \begin{quote}
-                \small\lsCollectionPaperAbstract
-                \end{quote}
-                \vspace{\baselineskip}
             }
             \chapter[tocentry={\titleToToC~\newline{\normalfont \@author}}]{\titleTemp}
-            \global\edef\lsCollectionPaperFirstPage{\thepage} % for citation in footer
+            \vspace{\baselineskip}
+            \begin{quote}
+                \small\lsCollectionPaperAbstract
+            \end{quote}
+%             \vspace{\baselineskip}
+            % Save the current page for the bibliographical information in the 
+            % chapter footer
+            \global\edef\lsCollectionPaperFirstPage{\thepage}
             \renewcommand{\newlineCover}{}
             \renewcommand{\newlineTOC}{\\}
             \ifoot[\lsCollectionPaperCitation]{
                 \ifbool{draft}{Draft of \today, \currenttime}{}
                     }
-            % The following ensure that a chapter is treated as a heading, which
-            % controls page break penalties and indentation following the heading.
-            \@afterindentfalse
-            \@afterheading
             \ifx\@epigram\empty%
-              \else {\epigraph{\@epigram\\[-5ex]}{\@epigramsource}
-                \epigram{}\epigramsource{}}%
+              \else {\epigraph{\@epigram\\[-2\baselineskip]}{\@epigramsource}
+                     \epigram{}\epigramsource{}}
             \fi
             \enlargethispage{-1\baselineskip}
         }
         \ohead{}
         \lehead{\lsCollectionPaperHeaderAuthor}
         \rohead{\lsCollectionPaperHeaderTitle}
-}%end includepaper
+        % The following ensure that a chapter is treated as a heading, which
+        % controls page break penalties and indentation following the heading.
+        \@afterheading\@afterindentfalse
+}
 
 \newcommand{\onlyAuthor}{%    % collection paper
     \renewcommand{\and}{, }%
@@ -2148,7 +2135,6 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newlength{\LSPTmp}
-\usepackage[figuresright]{rotating}
 
 \ifbool{uniformtopskip}{}{% Donald Arseneau's automatic handling of page breaking from comp.text.tex: https://groups.google.com/d/topic/comp.text.tex/3eehwzortPg/discussion
     % With the optimisations from the memoir class. The memoir class has relative instead of absolute values.
