@@ -2,6 +2,11 @@
 		"title": "Third language acquisition",
 		"authors": [{"name": "Camilla Bardel"},{"name":" Laura Sánchez"}],
 	"license": "CC-BY-4.0",
-	"publishedAt": "2020-03-11T12:15:38.000Z"}
+	"publishedAt": "2020-03-11T12:15:38.000Z"},
+	{"versiontype": "first_edition",
+		"title": "Third language acquisition",
+		"authors": [{"name": "Camilla Bardel"},{"name":" Laura Sánchez"}],
+	"license": "CC-BY-4.0",
+	"publishedAt": "2020-12-07T12:15:38.000Z"}
 	]
 }
